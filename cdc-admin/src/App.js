@@ -1,8 +1,26 @@
 import React, { Component } from 'react';
 import './css/pure-min.css';
 import './css/side-menu.css';
+import $ from 'jquery';
 
 class App extends Component {
+
+constructor() {
+  super();
+  this.state = {lista: []};
+}
+
+componentDidMount(){
+  $.ajax({
+    url:"https://cdc-react.herokuapp.com/api/autores",
+    dataType: 'json',
+    success:function(resposta){
+      this.setState({lista:resposta});
+      }.bind(this)
+    }
+  );
+}
+
   render() {
     return (
 <div id="layout">
@@ -61,10 +79,16 @@ class App extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>Alberto</td>                
-                      <td>alberto.souza@caelum.com.br</td>                
-                    </tr>
+                    {
+                      this.state.lista.map(function(autor){
+                        return(
+                          <tr key={autor.id}>
+                            <td>{autor.nome}</td>
+                            <td>{autor.email}</td>
+                          </tr>
+                        )
+                      })
+                    }
                   </tbody>
                 </table> 
               </div>             

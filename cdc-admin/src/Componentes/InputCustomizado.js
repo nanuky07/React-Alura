@@ -15,7 +15,6 @@ import PubSub from 'pubsub-js';
                 <input id={this.props.id} type={this.props.type} name={this.props.name} value={this.props.value} onChange={this.props.onChange} />
                 <span className="erro">{this.state.msgErro}</span>                  
             </div>
-
         );
     }
 
@@ -23,8 +22,7 @@ import PubSub from 'pubsub-js';
         PubSub.subscribe("erro-validacao", function(topico,erro){
             if(erro.field === this.props.name){
                 this.setState({msgErro:erro.defaultMessage});
-            }
-            
+            }            
         }.bind(this));
 
         PubSub.subscribe("limpa-erros", function(topico){          
